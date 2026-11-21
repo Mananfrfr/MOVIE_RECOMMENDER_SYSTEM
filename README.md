@@ -9,3 +9,11 @@ BUILD A CONTENT BASED RECOMMENDER SYSTEM USING COSINE VECTORIZATION, DONE DATA P
 
 
 
+
+## Poster configuration
+
+Set the `TMDB_API_KEY` environment variable to your own TMDB API key before running `streamlit run app.py`. In PowerShell, use `$env:TMDB_API_KEY="your-key"`; in bash, use `export TMDB_API_KEY="your-key"`. Without a key, recommendations still display their titles. Missing artwork and failed API requests display "Poster unavailable". Each poster request has a five-second timeout.
+
+## Regression tests
+
+Run `python -m unittest discover -s tests -v`. Poster tests mock network calls and require only `requests`; no API key or model artifacts are needed.

@@ -1,16 +1,8 @@
 import streamlit as st
 import pickle
 import pandas as pd
-import requests
-from matplotlib.pyplot import title
-
-
-#basically we are using tmdb's api to fetch the movie poster we got tmdb api converted it into json and from there fetched the poster_path
-def fetch_poster(movie_id):
-    response=requests.get('https://api.themoviedb.org/3/movie/{}?api_key=bb55a11c90b669c76eb7d9ddef31b16a&language=en-US'.format(movie_id))
-    data=response.json()
-    return  "https://image.tmdb.org/t/p/w500/"+data['poster_path']
-
+import os
+from posters import fetch_poster
 
 
 def recommend(movie):
@@ -24,7 +16,7 @@ def recommend(movie):
         movie_id=movies.iloc[i[0]].movie_id
         recommended_movies.append(movies.iloc[i[0]].title)
         # fetch poster from API
-        recommended_movies_poster.append(fetch_poster(movie_id))
+        recommended_movies_poster.append(fetch_poster(movie_id, os.environ.get("TMDB_API_KEY", "")))
     return recommended_movies,recommended_movies_poster
 
 
@@ -50,20 +42,35 @@ if st.button("Recommend"):
 
     with col1:
         st.text(names[0])
-        st.image(posters[0])
+        if posters[0]:
+            st.image(posters[0])
+        else:
+            st.caption("Poster unavailable")
 
     with col2:
         st.text(names[1])
-        st.image(posters[1])
+        if posters[1]:
+            st.image(posters[1])
+        else:
+            st.caption("Poster unavailable")
 
     with col3:
         st.text(names[2])
-        st.image(posters[2])
+        if posters[2]:
+            st.image(posters[2])
+        else:
+            st.caption("Poster unavailable")
 
     with col4:
         st.text(names[3])
-        st.image(posters[3])
+        if posters[3]:
+            st.image(posters[3])
+        else:
+            st.caption("Poster unavailable")
 
     with col5:
         st.text(names[4])
-        st.image(posters[4])
+        if posters[4]:
+            st.image(posters[4])
+        else:
+            st.caption("Poster unavailable")
